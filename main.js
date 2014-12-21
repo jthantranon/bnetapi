@@ -66,3 +66,5 @@ app.controller("theController", ["$scope","$firebase", "$http", function($scope,
     //}
 
 }]);
+
+var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }

@@ -9,11 +9,11 @@ https.globalAgent.maxSockets = 1;
 var fs = require('fs');
 //var urlm = require('url');
 //var exec = require('child_process').exec;
-var requestm = require('request');
-var Download = require('download');
-var progress = require('download-status');
+//var requestm = require('request');
+//var Download = require('download');
+//var progress = require('download-status');
 //var process = require('process');
-var battle = require('battle');
+//var battle = require('battle');
 var Firebase = require('firebase');
 var FB = new Firebase("https://bnetapi.firebaseio.com/");
 
