@@ -164,7 +164,7 @@ function SaveAuctionData(data,filename){
     console.log('=== Data Recieved... Saving Data... ===');
     fs.writeFileSync(filename, data);
     fs.writeFileSync('currentData.json', data);
-    CDATA = data;
+    CDATA = JSON.parse(data);
     cLOG.lastModified = LAST_MODIFIED;
     cLOG.timeStamp = TIME_STAMP;
     SaveCLOG();
@@ -271,19 +271,34 @@ function LoadWatchList(){
 
 }
 
+function DisplayPrice(p){
+    if(p < 10000000){
+        if(p < 10000){
+            return (p/100).toFixed(1) + ' Silver';
+        } else {
+            return (p/10000).toFixed(1) + ' Gold';
+        }
+    } else {
+        return (p/10000000).toFixed(1) + 'K Gold';
+    }
+}
+
+
 function GetLowestPrice(item){
     //var realm = CDATA.realm;
     var data = CDATA.auctions.auctions;
     var dataLength = data.length;
     var results = [];
     for(var i=0;i<dataLength;i++){
-        if(data[i].item == item.id) results.push(data[i].buyout);
+        if(data[i].buyout !== 0){
+            if(data[i].item == item.id) results.push(data[i].buyout); //TODO: WHAT IF NO RESULTS?!
+        }
     }
     results.sort(function(a, b){return a-b});
     process.stdout.write('\n');
     var lowestBuyout = results[0];
     console.log('**** ' + item.name + ' - (' + item.id + ') *****');
-    console.log('LOWEST_PRICE -> ' + (lowestBuyout/10000000).toFixed(1) + 'K');
+    console.log('LOWEST_PRICE -> ' + DisplayPrice(lowestBuyout));
     FB.child('watching').child(item.id).set({
         name: item.name,
         lowestBuyout: lowestBuyout

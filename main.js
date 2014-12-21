@@ -53,7 +53,15 @@ app.controller("theController", ["$scope","$firebase", "$http", function($scope,
     };
 
     $scope.DisplayPrice = function(p){
-        return p < 10000000 ? (p/10000).toFixed(1) + ' Gold' : (p/10000000).toFixed(1) + 'K Gold';
+        if(p < 10000000){
+            if(p < 10000){
+                return (p/100).toFixed(1) + ' Silver';
+            } else {
+                return (p/10000).toFixed(1) + ' Gold';
+            }
+        } else {
+            return (p/10000000).toFixed(1) + 'K Gold';
+        }
     };
 
     //for (var key in $scope.info) {
@@ -66,5 +74,3 @@ app.controller("theController", ["$scope","$firebase", "$http", function($scope,
     //}
 
 }]);
-
-var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }

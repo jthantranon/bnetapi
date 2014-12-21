@@ -16,10 +16,14 @@
     <div ng-repeat="(k,v) in info" class="pre"><label>{{v}}: </label> {{$parent[k]}}</div>
     <br>
     <input type="text" ng-model="watchAddition"><button ng-click="AddWatch()">Add {{watchAddition}} to Watch List</button><br>
+    <a href="http://www.wowhead.com/item={{watchAddition}}" class="itemName" target="_blank">{{watchAddition}}</a>
     <br>
     <div ng-repeat="(k,v) in watching">
         <a href="http://www.wowhead.com/item={{k}}" class="itemName" target="_blank">{{v.name}}</a>
-        <div>{{DisplayPrice(v.lowestBuyout)}}</div>
+        <div>
+            {{DisplayPrice(v.lowestBuyout*(multi || 1))}}
+            <!--<input type="text" size="2" ng-model="multi">-->
+        </div>
     </div>
 
 
@@ -30,8 +34,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
 <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
-<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+
 <script src="main.js"></script>
+<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
 
 </body>
 </html>
