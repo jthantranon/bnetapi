@@ -21,8 +21,9 @@
     <div ng-repeat="(k,v) in watching">
         <a href="http://www.wowhead.com/item={{k}}" class="itemName" target="_blank">{{v.name}}</a>
         <div>
-            {{DisplayPrice(v.lowestBuyout*(multi || 1))}}
-            <!--<input type="text" size="2" ng-model="multi">-->
+            <span ng-click="showMulti = showMulti ? false : true">{{DisplayPrice(v.lowestBuyout*(multi || 1))}}</span>
+            <input type="text" size="2" ng-model="multi" ng-show="showMulti">
+            <span ng-show="multi > 1">{{multi ? 'x ' + multi : ''}}</span>
         </div>
     </div>
 
