@@ -18,7 +18,7 @@
     <input type="text" ng-model="watchAddition"><button ng-click="AddWatch()">Add {{watchAddition}} to Watch List</button><br>
     <br>
     <div ng-repeat="(k,v) in watching">
-        <a href="http://www.wowhead.com/item={{k}}&xml" class="itemName">{{v.name}}</a>
+        <a href="http://www.wowhead.com/item={{k}}" class="itemName" target="_blank">{{v.name}}</a>
         <div>{{DisplayPrice(v.lowestBuyout)}}</div>
     </div>
 
