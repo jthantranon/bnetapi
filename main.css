@@ -1,0 +1,15 @@
+label{
+    text-emphasis: darkblue;
+    font-weight: bold;
+}
+
+.pre{
+    font-family: monospace;
+    white-space: pre;
+    font-size: 2em;
+}
+
+.itemName{
+    font-weight: bold;
+    color: darkblue;
+}
