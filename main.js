@@ -2,6 +2,7 @@
  * Created by John on 12/20/2014.
  */
 var FB = new Firebase("https://bnetapi.firebaseio.com/");
+var FBMI = FB.child('masterInput');
 
 /**
  * Created by john.thantranon on 12/10/2014.

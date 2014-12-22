@@ -16,6 +16,11 @@ var fs = require('fs');
 //var battle = require('battle');
 var Firebase = require('firebase');
 var FB = new Firebase("https://bnetapi.firebaseio.com/");
+var FBMI = FB.child('masterInput');
+FBMI.on('value',function(data){
+    var dat = data.val();
+    console.log(dat);
+});
 
 
 var TIMEOUT_TIME = 120000;
@@ -177,6 +182,7 @@ function ConsumeAuctionResponse(res,filename){
     res.on('data',function(data){
         body += data;
         process.stdout.write(data);
+        //process.stdout.write('.');
         //process.stdout.write(".");
     });
     res.on('end',function(){
@@ -296,7 +302,7 @@ function GetLowestPrice(item){
     }
     results.sort(function(a, b){return a-b});
     process.stdout.write('\n');
-    var lowestBuyout = results[0];
+    var lowestBuyout = results[0] || 0;
     console.log('**** ' + item.name + ' - (' + item.id + ') *****');
     console.log('LOWEST_PRICE -> ' + DisplayPrice(lowestBuyout));
     FB.child('watching').child(item.id).set({
@@ -326,23 +332,27 @@ function RetrieveItemInfo(itemID,context){
         process.stdout.write('\n');
         console.log("=== Attempting New Item Lookup ===");
         console.log("> StatusCode: " + res.statusCode);
-        res.on('data', function(chunk) {
-            body += chunk;
-        });
+        if(res.statusCode == '404'){
+            console.log('Invalid entry, ignoring.')
+        } else {
+            res.on('data', function(chunk) {
+                body += chunk;
+            });
 
-        res.on('end', function() {
-            //console.log('end' + itemID);
-            var data = JSON.parse(body);
-            if(data.name){
-                cLOG.items[itemID] = data;
-                SaveCLOG();
-                LoadWatchList();
-            } else {
-                RetrieveItemInfo(itemID,data.availableContexts[0]);
-            }
+            res.on('end', function() {
+                var data = JSON.parse(body);
+                if(data.name){
+                    cLOG.items[itemID] = data;
+                    SaveCLOG();
+                    LoadWatchList();
+                } else {
+                    RetrieveItemInfo(itemID,data.availableContexts[0]);
+                }
 
 
-        });
+            });
+        }
+
     }).on('error', function(e) {
         console.log("Got error: ", e);
     });
